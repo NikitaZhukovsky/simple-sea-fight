@@ -1,6 +1,7 @@
 from art import tprint
 
 tprint("GamePy")
+
 first_pole = [[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
               [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
               [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
@@ -120,8 +121,9 @@ counter_ship = 1
 print("Игрок №1, расставьте корабли")
 while counter_ship <= 2:
     first_ship, first_vert, first_hor, first_orientation = choice(counter_ship)
-    print(default_ships)
-    first_pole = add_ship(first_pole, first_ship, default_ships, first_vert, first_hor, first_orientation)
+    first_inventory = default_ships.copy()
+    print(f"Оставшиеся корабли: {first_inventory}")
+    first_pole = add_ship(first_pole, first_ship, first_inventory, first_vert, first_hor, first_orientation)
     print_pole(first_pole)
     counter_ship += 1
 
@@ -131,17 +133,20 @@ counter_ship = 1
 print("Игрок №2, расставьте корабли")
 while counter_ship <= 2:
     second_ship, second_vert, second_hor, second_orientation = choice(counter_ship)
-    print(default_ships)
-    second_pole = add_ship(second_pole, second_ship, default_ships, second_vert, second_hor, second_orientation)
+    second_inventory = default_ships.copy()
+    print(f"Оставшиеся корабли: {second_inventory}")
+    second_pole = add_ship(second_pole, second_ship, second_inventory, second_vert, second_hor, second_orientation)
     print_pole(second_pole)
     counter_ship += 1
 
 while not (check_health(first_pole) or check_health(second_pole)):
+    print("Игрок №1 стреляет")
+    second_battle_pole = boom(second_pole)
+    print_pole(second_battle_pole)
+    print("\n" * 50)
+
     print("Игрок №2 стреляет")
     first_battle_pole = boom(first_pole)
     print_pole(first_battle_pole)
 
-    print("\n" * 50)
-    print("Игрок №1 стреляет")
-    second_battle_pole = boom(second_pole)
-    print_pole(second_battle_pole)
+
